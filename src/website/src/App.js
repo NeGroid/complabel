@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <form method="post" action="http://localhost:5000/solutions/find">
+        <form method="post" action="http://localhost:5000/api/solutions">
           <div>
             <label htmlFor="ncs">NCS</label>
             <select name="ncs" id="ncs">
