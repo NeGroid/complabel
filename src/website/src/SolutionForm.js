@@ -56,28 +56,50 @@ const SolutionForm = () => {
   const sequence = useField("sequence", form);
   const stock = useField("stock", form);
 
+  const isValidSequence = !sequence.meta.error;
+  const isValidStock = !stock.meta.error;
+  const sequenceClassName = isValidSequence
+    ? "form-control is-valid"
+    : "form-control is-invalid";
+  const stockClassName = isValidStock
+    ? "form-control is-valid"
+    : "form-control is-invalid";
+
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label>NCS</label>
-        <Select {...ncs.input} options={ncsOptions} />
-        {ncs.meta.touched && ncs.meta.error && <span>{ncs.meta.error}</span>}
+      <div className="form-group">
+        <label htmlFor="ncs">NCS</label>
+        <Select {...ncs.input} options={ncsOptions} className="form-control" />
+        {ncs.meta.touched && ncs.meta.error && (
+          <span className="invalid-feedback">{ncs.meta.error}</span>
+        )}
       </div>
-      <div>
-        <label>Sequencee</label>
-        <textarea {...sequence.input} placeholder="Sequencee" />
+      <div className="form-group">
+        <label htmlFor="sequence">Sequence</label>
+        <textarea
+          {...sequence.input}
+          placeholder="Sequence"
+          className={sequenceClassName}
+        />
         {sequence.meta.touched && sequence.meta.error && (
-          <span>{sequence.meta.error}</span>
+          <span className="invalid-feedback">{sequence.meta.error}</span>
         )}
       </div>
-      <div>
-        <label>Stock</label>
-        <textarea {...stock.input} placeholder="Stock" />
+      <div className="form-group">
+        <label htmlFor="stock">Stock</label>
+        <textarea
+          {...stock.input}
+          placeholder="Stock"
+          className={stockClassName}
+        />
         {stock.meta.touched && stock.meta.error && (
-          <span>{stock.meta.error}</span>
+          <span className="invalid-feedback">{stock.meta.error}</span>
         )}
       </div>
-      <button type="btn btn-primary submit" disabled={pristine || submitting}>
+      <button
+        type="btn btn-primary submit"
+        disabled={pristine || submitting || !isValidSequence || !isValidStock}
+      >
         Submit
       </button>
     </form>
