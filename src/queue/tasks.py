@@ -11,3 +11,8 @@ celery = Celery('tasks', broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND
 def add(x: int, y: int) -> int:
     time.sleep(5)
     return x + y
+
+@celery.task(name='tasks.find_solution')
+def find_solution(ncs: str, sequence: str, stocks: str) -> str:
+    time.sleep(5)
+    return 'ncs: {}\nsequence: {}\nstock: {}'.format(ncs, sequence, stocks)

@@ -1,13 +1,15 @@
-from flask import Flask
-from flask import url_for
+from flask import Flask, url_for, request
 from worker import celery
 import celery.states as states
 
 app = Flask(__name__)
 
-@app.route('/add/<int:param1>/<int:param2>')
-def add(param1: int, param2: int) -> str:
-    task = celery.send_task('tasks.add', args=[param1, param2], kwargs={})
+@app.route('/solutions/find', methods=['POST'])
+def find() -> str:
+    ncs = request.form['ncs']
+    sequence = request.form['sequence']
+    stock = request.form['stock']
+    task = celery.send_task('tasks.find_solution', args=[ncs, sequence, stock], kwargs={})
     response = f"<a href='{url_for('check_task', task_id=task.id, external=True)}'>check status of {task.id} </a>"
     return response
 
