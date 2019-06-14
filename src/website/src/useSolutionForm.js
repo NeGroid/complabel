@@ -27,10 +27,6 @@ const ncsOptions = [
   }
 ];
 
-const onSubmit = form => {
-  console.log("submitting", form);
-};
-
 const validate = form => {
   const errors = {};
   if (!form.ncs) {
@@ -45,10 +41,13 @@ const validate = form => {
   return errors;
 };
 
-const useSolutionForm = () => {
+const useSolutionForm = onSubmit => {
   const { form, handleSubmit, pristine, submitting } = useForm({
     onSubmit,
-    validate
+    validate,
+    initialValues: {
+      ncs: ncsOptions[0].value
+    }
   });
   const ncs = useField("ncs", form);
   const sequence = useField("sequence", form);
@@ -56,10 +55,14 @@ const useSolutionForm = () => {
 
   const isValidSequence = !sequence.meta.error;
   const isValidStock = !stock.meta.error;
+  const isValidNcs = !ncs.meta.error;
   const sequenceClassName = isValidSequence
     ? "form-control is-valid"
     : "form-control is-invalid";
   const stockClassName = isValidStock
+    ? "form-control is-valid"
+    : "form-control is-invalid";
+  const ncsClassName = isValidNcs
     ? "form-control is-valid"
     : "form-control is-invalid";
 
@@ -72,10 +75,12 @@ const useSolutionForm = () => {
     ncs,
     sequence,
     stock,
+    isValidNcs,
     isValidSequence,
     isValidStock,
     sequenceClassName,
-    stockClassName
+    stockClassName,
+    ncsClassName
   };
 };
 

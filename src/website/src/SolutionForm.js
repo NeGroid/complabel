@@ -3,6 +3,10 @@ import useSolutionForm from "./useSolutionForm";
 import Select from "./Select";
 
 const SolutionForm = () => {
+  const onSubmit = form => {
+    console.log("submitting", form);
+  };
+
   const {
     ncsOptions,
     handleSubmit,
@@ -13,15 +17,17 @@ const SolutionForm = () => {
     stock,
     isValidSequence,
     isValidStock,
+    isValidNcs,
     sequenceClassName,
-    stockClassName
-  } = useSolutionForm();
+    stockClassName,
+    ncsClassName
+  } = useSolutionForm(onSubmit);
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
         <label htmlFor="ncs">NCS</label>
-        <Select {...ncs.input} options={ncsOptions} className="form-control" />
+        <Select {...ncs.input} options={ncsOptions} className={ncsClassName} />
         {ncs.meta.touched && ncs.meta.error && (
           <span className="invalid-feedback">{ncs.meta.error}</span>
         )}
@@ -50,7 +56,13 @@ const SolutionForm = () => {
       </div>
       <button
         type="btn btn-primary submit"
-        disabled={pristine || submitting || !isValidSequence || !isValidStock}
+        disabled={
+          pristine ||
+          submitting ||
+          !isValidSequence ||
+          !isValidStock ||
+          !isValidNcs
+        }
       >
         Submit
       </button>
