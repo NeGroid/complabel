@@ -7,7 +7,6 @@ import SolutionTask from "./SolutionTask";
 
 const SolutionForm = () => {
   const { data, loading, error, onSubmit } = useFindSolutionRequest();
-
   const {
     ncsOptions,
     handleSubmit,
@@ -25,7 +24,7 @@ const SolutionForm = () => {
   } = useSolutionForm(onSubmit);
 
   const errorDiv = error ? <div>Error while submitting a form.</div> : null;
-  const taskHref = data && data.url ? <SolutionTask url={data.url} /> : null;
+  const taskHref = !(data && data.url) ? null : <SolutionTask url={data.url} />;
 
   return (
     <>
