@@ -1,6 +1,6 @@
 import React from "react";
 import useSolutionForm from "./useSolutionForm";
-import Select from "./Select";
+import Select from "../Select";
 
 const SolutionForm = () => {
   const onSubmit = form => {
