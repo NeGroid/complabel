@@ -1,25 +1,11 @@
 import React from "react";
-import { usePost } from "use-http";
 import useSolutionForm from "./useSolutionForm";
-import Select from "../Select";
-
-const SubmitButton = ({ loading = false, ...rest }) => (
-  <button type="btn btn-primary submit" {...rest}>
-    {loading ? <span>Loading...</span> : <span>Submit</span>}
-  </button>
-);
+import useFindSolutionRequest from "./useFindSolutionRequest";
+import Select from "./Select";
+import SubmitButton from "./SubmitButton";
 
 const SolutionForm = () => {
-  const [data, loading, error, post] = usePost({
-    baseUrl: "/api",
-    headers: {
-      "Content-type": "application/json; charset=UTF-8"
-    }
-  });
-  const onSubmit = form => {
-    console.log("submitting", form);
-    post("/solutions", form);
-  };
+  const { data, loading, error, onSubmit } = useFindSolutionRequest();
 
   const {
     ncsOptions,
@@ -38,7 +24,12 @@ const SolutionForm = () => {
   } = useSolutionForm(onSubmit);
 
   const errorDiv = error ? <div>Error while submitting a form.</div> : null;
-  const taskHref = data && data.url ? <a href={data.url}>Task</a> : null;
+  const taskHref =
+    data && data.url ? (
+      <a href={data.url} target="_blank" rel="noopener noreferrer">
+        Task
+      </a>
+    ) : null;
 
   return (
     <>
