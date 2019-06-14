@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request
+from flask import Flask, url_for, request, jsonify
 from worker import celery
 import celery.states as states
 
@@ -6,11 +6,17 @@ app = Flask(__name__)
 
 @app.route('/api/solutions', methods=['POST'])
 def find() -> str:
-    ncs = request.form['ncs']
-    sequence = request.form['sequence']
-    stock = request.form['stock']
+    content = request.get_json()
+    ncs = content['ncs']
+    sequence = content['sequence']
+    stock = content['stock']
     task = celery.send_task('tasks.find_solution', args=[ncs, sequence, stock], kwargs={})
-    response = f"<a href='{url_for('check_task', task_id=task.id)}'>check status of {task.id} </a>"
+    data = {
+        'url': url_for('check_task', task_id=task.id)
+    }
+    response = jsonify(data)
+    response.status_code = 200
+    
     return response
 
 @app.route('/api/solutions/<string:task_id>', methods=['GET'])

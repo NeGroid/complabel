@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "final-form": "^4.13.1",
+    "http-proxy-middleware": "^0.19.1",
     "husky": "^2.4.0",
     "lint-staged": "^8.2.0",
     "prettier": "^1.18.2",
@@ -49,6 +50,5 @@
       "prettier --config .prettierrc --write",
       "git add"
     ]
-  },
-  "proxy": "http://localhost:5000"
+  }
 }
