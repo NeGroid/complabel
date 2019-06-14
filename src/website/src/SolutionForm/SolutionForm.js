@@ -3,6 +3,7 @@ import useSolutionForm from "./useSolutionForm";
 import useFindSolutionRequest from "./useFindSolutionRequest";
 import Select from "./Select";
 import SubmitButton from "./SubmitButton";
+import SolutionTask from "./SolutionTask";
 
 const SolutionForm = () => {
   const { data, loading, error, onSubmit } = useFindSolutionRequest();
@@ -24,12 +25,7 @@ const SolutionForm = () => {
   } = useSolutionForm(onSubmit);
 
   const errorDiv = error ? <div>Error while submitting a form.</div> : null;
-  const taskHref =
-    data && data.url ? (
-      <a href={data.url} target="_blank" rel="noopener noreferrer">
-        Task
-      </a>
-    ) : null;
+  const taskHref = data && data.url ? <SolutionTask url={data.url} /> : null;
 
   return (
     <>

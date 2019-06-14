@@ -16,13 +16,17 @@ def find() -> str:
     }
     response = jsonify(data)
     response.status_code = 200
-    
+
     return response
 
 @app.route('/api/solutions/<string:task_id>', methods=['GET'])
 def check_task(task_id: str) -> str:
     res = celery.AsyncResult(task_id)
-    if res.state == states.PENDING:
-        return res.state
-    else:
-        return str(res.result)
+    data = { 'state' : res.state } if res.state == states.PENDING else {
+        'state' : res.state,
+        'result' : res.result
+    }
+    response = jsonify(data)
+    response.status_code = 200
+
+    return response
