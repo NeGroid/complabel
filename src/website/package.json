@@ -13,6 +13,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-final-form-hooks": "^2.0.0",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "use-http": "^0.1.65"
   },
@@ -51,5 +52,8 @@
       "prettier --config .prettierrc --write",
       "git add"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^1.6.0"
   }
 }
